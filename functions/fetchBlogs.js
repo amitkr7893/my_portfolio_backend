@@ -14,11 +14,13 @@ exports.handler = async function (event, context) {
         });
 
         if (!response.ok) {
+            const errText = await response.text();
             return {
                 statusCode: response.status,
-                body: JSON.stringify({ error: "Failed to fetch from GitHub" }),
+                body: JSON.stringify({ error: "Failed to fetch from GitHub", details: errText }),
             };
         }
+        
 
         const data = await response.json();
 
